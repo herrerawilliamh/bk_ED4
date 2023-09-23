@@ -1,12 +1,16 @@
 /*IMPORTS*/
-import fs from 'fs'
-import path from "path";
-import { fileURLToPath } from 'url';
-import ProductManager from './ProductManager.js';
+//import fs from 'fs'
+const fs = require('fs');
+//import path from "path";
+const path = require('path');
+//import { fileURLToPath } from 'url';
+//const { fileURLToPath } = require('url');
+//import ProductManager from './ProductManager.js';
+const ProductManager = require('./ProductManager.js');
 
 /*VARS*/
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+//const __filename = fileURLToPath(import.meta.url);
+//const __dirname = path.dirname(__filename);
 const cartPath = path.join(__dirname, 'data', 'cart.json');
 
 
@@ -75,4 +79,5 @@ class CartManager{
     }
 }
 
-export default CartManager;
+//export default CartManager;
+module.exports = CartManager;

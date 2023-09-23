@@ -1,5 +1,6 @@
 /*IMPORTS*/
-import express from 'express';
+//import express from 'express';
+const express = require('express');
 
 const router = express.Router();
 
@@ -7,4 +8,5 @@ router.get('/', (req, res) => {
     res.render('index', {} )
 });
 
-export default router;
+//export default router;
+module.exports = router;

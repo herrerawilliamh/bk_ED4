@@ -1,15 +1,13 @@
-import express from "express";
-import CartManager from "../CartManager.js";
-import ProductManager from "../ProductManager.js";
-
+//import express from "express";
+const express = require('express');
+//import CartManager from "../CartManager.js";
+const CartManager = require('../CartManager.js');
+//import ProductManager from "../ProductManager.js";
+const ProductManager = require('../ProductManager.js');
 
 const router = express.Router();
 const products = new ProductManager();
 const cartManager = new CartManager(products);
-
-function generateId(){
-    return (lastId++).toString();
-}
 
 router.post('/carts', (req,res) => {
   const cart = cartManager.createCart();
@@ -41,5 +39,5 @@ router.post('/carts/:cid/product/:pid', (req, res) => {
   }
 });
   
-
-export default router;
+//export default router;
+module.exports = router;

@@ -1,11 +1,14 @@
 /*IMPORTS*/
-import fs from 'fs'
-import path from "path";
-import { fileURLToPath } from 'url';
+//import fs from 'fs'
+const fs = require('fs');
+//import path from "path";
+const path = require('path');
+//import { fileURLToPath } from 'url';
+//const { fileURLToPath } = require('url');
 
 /*VARS*/
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+//const __filename = fileURLToPath(import.meta.url);
+//const __dirname = path.dirname(__filename);
 const dataPath = path.join(__dirname, 'data', 'data.json');
 
 class ProductManager{
@@ -97,12 +100,6 @@ class ProductManager{
     }
 
 }
- /*SEGUNDA ENTREGA*/
-// const productManager = new ProductManager()
-// console.log(productManager.getProducts())
-// productManager.getProductsById(2)
-// productManager.updateProduct(2, "title","Muffin - Mix - Strawberry Rhubarb 2")
-// productManager.deleteProduct(2)
 
-/*TERCERA ENTREGA*/
-export default ProductManager;
+//export default ProductManager;
+module.exports = ProductManager;

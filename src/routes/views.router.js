@@ -1,12 +1,14 @@
 /*IMPORTS*/
-//import express from 'express';
 const express = require('express');
+const ProductManager = require('../ProductManager.js');
 
+/*VARS*/
 const router = express.Router();
+const productManager = new ProductManager();
 
-router.get('/', (req, res) => {
-    res.render('index', {} )
+router.get('/home', (req, res) => {
+    const products = productManager.getProducts();
+    res.render('home', {title: "WILLY Ecommerce", products: products} )
 });
 
-//export default router;
 module.exports = router;

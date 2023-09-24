@@ -1,45 +1,54 @@
 /*IMPORTS*/
-//import express from "express";
 const express = require('express');
-//import path from "path";
+const app = express();
 const path = require('path');
-//import __dirname from "./utils.js";
-//import handlebars from 'express-handlebars';
 const handlebars = require('express-handlebars');
-//import viewsRouter from './routes/views.router.js';
-const viewsRouter = require('./routes/views.router.js');
-//import { Server } from "socket.io";
-const { Server } = require('socket.io');
-//import productsRouter from './routes/products.router.js';
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+/*ROUTES*/
 const productsRouter = require('./routes/products.router.js');
-//import cartsRouter from './routes/carts.router.js'
 const cartsRouter = require('./routes/carts.router.js');
+const viewsRouter = require('./routes/views.router.js');
+const ProductManager = require('./ProductManager.js');
 
 /*VARS*/
-const app = express();
 const PORT = 8080;
-const httpServer = app.listen(PORT, () => { console.log(`Listening on port ${PORT}`) });
-const socketServer = new Server(httpServer);
+const productManager = new ProductManager();
 
-/*Template Manager*/
+/*HANDLEBARS START*/
 app.engine('handlebars', handlebars.engine());
-app.set('views', __dirname, '/views');
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 
+
+/*Manager Public Folder*/
+app.use(express.static(path.join(__dirname, 'public')));
+
+/*RENDER*/
+app.get('/', (req, res) => {
+    const products = productManager.getProducts();
+    res.render('home', {title: "WILLY Ecommerce", products: products});
+});
+
+/*Respuesta del Puerto*/
+server.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
+
+/*SOCKET*/
+io.on("connection", socket =>{
+    console.log("Usuario conectado")
+    socket.on("disconnect", () => {
+        console.log("Usuario desconectado")
+    })
+})
 
 /*Middlewars*/
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-/*Manager Public Folder*/
-app.use(express.static(path.join(__dirname, 'public')));
-
 /*Routes*/
 app.use("/", productsRouter);
 app.use("/", cartsRouter);
 app.use("/", viewsRouter);
-
-/*Server Route to .html*/
-/*app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"))
-})*/

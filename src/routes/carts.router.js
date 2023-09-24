@@ -1,10 +1,9 @@
-//import express from "express";
+/*IMPORTS*/
 const express = require('express');
-//import CartManager from "../CartManager.js";
 const CartManager = require('../CartManager.js');
-//import ProductManager from "../ProductManager.js";
 const ProductManager = require('../ProductManager.js');
 
+/*VARS*/
 const router = express.Router();
 const products = new ProductManager();
 const cartManager = new CartManager(products);
@@ -38,6 +37,5 @@ router.post('/carts/:cid/product/:pid', (req, res) => {
     res.status(404).json({message: 'Cart or product not found'});
   }
 });
-  
-//export default router;
+
 module.exports = router;

@@ -3,7 +3,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const handlebars = require('express-handlebars');
-const server = require('http').createServer(app);
+const http = require('http');
+const server =http.createServer(app);
 const io = require('socket.io')(server);
 
 /*ROUTES*/
@@ -31,11 +32,6 @@ app.get('/', (req, res) => {
     res.render('home', {title: "WILLY Ecommerce", products: products});
 });
 
-/*Respuesta del Puerto*/
-server.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
-
 /*SOCKET*/
 io.on("connection", socket =>{
     console.log("Usuario conectado")
@@ -52,3 +48,11 @@ app.use(express.urlencoded({extended: true}));
 app.use("/", productsRouter);
 app.use("/", cartsRouter);
 app.use("/", viewsRouter);
+
+/*Respuesta del Puerto*/
+server.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
+
+module.exports = server;
+module.exports = io;
